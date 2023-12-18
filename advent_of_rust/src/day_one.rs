@@ -1,5 +1,4 @@
 use std::fmt;
-use std::fs;
 
 #[derive(Debug)]
 enum Direction {
@@ -20,21 +19,14 @@ impl fmt::Display for Direction {
     }
 }
 
-fn read_file(file_path: &str) -> String {
-    let contents = fs::read_to_string(file_path).expect("Should have been able to read the file");
-    return contents;
-}
-
-pub fn solve_part_one() -> i32 {
-    let input = read_file("src/day_one.txt");
+pub fn solve_part_one(input: String) -> i32 {
     let instructions: Vec<&str> = input.split(",").map(|f| f.trim()).collect();
     let coords = find_dest(instructions);
     let shortest_path = coords.0.abs() + coords.1.abs();
     shortest_path
 }
 
-pub fn solve_part_two() -> i32 {
-    let input = read_file("src/day_one.txt");
+pub fn solve_part_two(input: String) -> i32 {
     let instructions: Vec<&str> = input.split(",").map(|f| f.trim()).collect();
     let coords = find_first_revisited_coord(instructions);
     let shortest_path = coords.0.abs() + coords.1.abs();
