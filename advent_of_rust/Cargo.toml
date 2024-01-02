@@ -1,6 +1,6 @@
 [package]
 name = "advent_of_rust"
-version = "0.2.0"
+version = "0.2.2"
 authors = ["Dave Ogle <dogle@scottlogic.com>"]
 edition = "2021"
 

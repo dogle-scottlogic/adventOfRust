@@ -1,0 +1,16 @@
+.nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: inline-block;
+  }
+  
+  .nav li {
+    display: inline-block;
+    padding: 0 .6em;
+    cursor: pointer;
+  }
+  
+  .nav a:hover, .nav a:focus {
+    color: #99ff99;
+  }
