@@ -2,9 +2,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import styles from "./page.module.css";
 import Nav from './Nav';
-import Day from './DaySolver';
 import DayOne from './DayOne';
 import DayTwo from './DayTwo';
+import React from 'react';
 
 export type PuzzleDay = "Day One" | "Day Two";
 
@@ -16,6 +16,7 @@ interface Module {
 };
 
 const Home = () => {
+  let fileInput: React.RefObject<HTMLInputElement> = React.createRef();;
   const [input, setInput] = useState<string>("");
   const [module, setModule] = useState<Module | null>(null);
   const [currentDay, setCurrentDay] = useState<PuzzleDay>("Day One");
@@ -52,18 +53,37 @@ const Home = () => {
     setPartTwo(null);
   }
 
+  const clearClicked = () => {
+    if (fileInput?.current?.value) {
+      fileInput.current.value = "";
+      setInput("");
+      setPartOne(null);
+      setPartTwo(null);
+    }
+  }
+
   return (
     <div className={styles.aoc}>
       <div className={styles.header}>
         <h1>Advent of Code 2016</h1>
-        <h2>Day One</h2>
+        <h2>{currentDay}</h2>
         <Nav items={["Day One", "Day Two"]} onClick={navClicked} />
       </div>
       <div className={styles.wrapper}>
+        <div className={styles.blurb}>
+          <p>Advent of code 2016, {currentDay}</p>
+          < br />
+          <p>This Webpage is rendered using NextJS.</p>
+          <p>The chosen file should be a .txt file containing a valid input for <a href='https://adventofcode.com/2016/day/1/input'>Day One.</a></p>
+          <p>Once provided the app will provide the ability to solve both parts of the puzzle.</p>
+          <p>The logic to solve the puzzle is written in Rust and uses Web Assembly to interface with JavaScript</p>
+        </div>
+        <br />
         <div className={styles.options}>
-          <div>
-            <input className={styles.part} type="file" onChange={showFile} />
-          </div>
+          <label className={styles.button}>
+            [ Select File ]
+            <input ref={fileInput} className={styles.part} type="file" onChange={showFile} />
+          </label>
           {
             currentDay === "Day One" ? (
               <DayOne
@@ -87,15 +107,7 @@ const Home = () => {
               />
             )
           }
-
-        </div>
-        <div className={styles.blurb}>
-          <p>Advent of code 2016, {currentDay}</p>
-          < br />
-          <p>This Webpage is rendered using NextJS.</p>
-          <p>The chosen file should be a .txt file containing a valid input for <a href='https://adventofcode.com/2016/day/1/input'>Day One.</a></p>
-          <p>Once provided the app will provide the ability to solve both parts of the puzzle.</p>
-          <p>The logic to solve the puzzle is written in Rust and uses Web Assembly to interface with JavaScript</p>
+          <button className={styles.button} onClick={clearClicked}>[ Clear ]</button>
         </div>
       </div>
       <div className={styles.footer}><small>A bench project by <a href='https://github.com/dogle-scottlogic'>@dogle-scottlogic</a></small></div>

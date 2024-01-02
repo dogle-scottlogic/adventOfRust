@@ -1,5 +1,5 @@
-import styles from "./daySolver.module.css";
 import { useState } from 'react';
+import styles from "./page.module.css";
 
 export interface CommonDayProps {
     setPartOne: (value: string | number | null) => void;
@@ -44,13 +44,13 @@ const Day = (props: DayProps) => {
     return (
         <>
             {(<>
-            <p>{error}</p>
-                <div className={styles.part}>
-                    {partOne ? <label className={styles.label}>{partOne}</label> : <button className={styles.button} onClick={getPartOne}>Solve Part One</button>}
+                <div className={styles.error}>{error}</div>
+                <div>
+                    {partOne ? <label>{partOne}</label> : <button className={styles.button} onClick={getPartOne}>[ Solve Part One ]</button>}
                 </div>
 
-                <div className={styles.part}>
-                    {partTwo ? <label className={styles.label}>{partTwo}</label> : <button className={styles.button} onClick={getPartTwo}>Solve Part Two</button>}
+                <div>
+                    {partTwo ? <label>{partTwo}</label> : <button className={styles.button} onClick={getPartTwo}>[ Solve Part Two ]</button>}
                 </div></>)
             }
         </>

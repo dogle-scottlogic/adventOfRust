@@ -21,8 +21,52 @@
 .wrapper {
   display: flex;
   padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .footer {
   padding: 5px;
+}
+
+.part::file-selector-button {
+  display: none;
+}
+
+.part {
+  margin-left: 10px;
+}
+
+.button {
+  background: none;
+  font: inherit;
+  border: none;
+  padding: 0;
+  margin-right: 10px;
+  color: #00cc00;
+  text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
+  cursor: pointer;
+  &.button:hover {
+    color: #99ff99;
+  }
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.options > label,
+.options > div {
+  margin: 5px 0 5px 0;
+}
+
+.error {
+  position: absolute;
+  color: #cc0000;
+  top: 0;
+  left: 0;
+  text-shadow: 0 0 2px #cc0000, 0 0 5px #cc0000;
 }
