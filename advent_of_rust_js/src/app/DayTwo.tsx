@@ -9,7 +9,7 @@ interface DayTwoProps extends CommonDayProps {
 const DayTwo = (props: DayTwoProps) => {
     const { part_one, part_two, input } = props;
 
-    const arrayInput = props.input.split("");
+    const arrayInput = props.input.split(/\r?\n/);
 
     return (
         <>
