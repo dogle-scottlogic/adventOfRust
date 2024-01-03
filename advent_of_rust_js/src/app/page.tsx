@@ -2,17 +2,19 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import styles from "./page.module.css";
 import Nav from './Nav';
-import DayOne from './DayOne';
-import DayTwo from './DayTwo';
 import React from 'react';
+import Day from './DaySolver';
 
-export type PuzzleDay = "Day One" | "Day Two";
+export type PuzzleDay = "Day One" | "Day Two" | "Day Three";
+export type PuzzleSolverFunction = (input: string) => string;
 
 interface Module {
-  day_one_part_one(input: string): number;
-  day_one_part_two(input: string): number;
-  day_two_part_one(input: string[]): string;
-  day_two_part_two(input: string[]): string;
+  day_one_part_one: PuzzleSolverFunction;
+  day_one_part_two: PuzzleSolverFunction
+  day_two_part_one: PuzzleSolverFunction;
+  day_two_part_two: PuzzleSolverFunction;
+  day_three_part_one: PuzzleSolverFunction;
+  day_three_part_two: PuzzleSolverFunction;
 };
 
 const Home = () => {
@@ -20,8 +22,8 @@ const Home = () => {
   const [input, setInput] = useState<string>("");
   const [module, setModule] = useState<Module | null>(null);
   const [currentDay, setCurrentDay] = useState<PuzzleDay>("Day One");
-  const [partOne, setPartOne] = useState<string | number | null>(null);
-  const [partTwo, setPartTwo] = useState<string | number | null>(null);
+  const [partOne, setPartOne] = useState<string | null>(null);
+  const [partTwo, setPartTwo] = useState<string | null>(null);
 
   useEffect(() => {
     // Load and instantiate the Wasm module from the CDN
@@ -62,12 +64,47 @@ const Home = () => {
     }
   }
 
+  const getSolvers = (): { solvePartOne?: PuzzleSolverFunction, solvePartTwo?: PuzzleSolverFunction } => {
+    switch (currentDay) {
+      case "Day One":
+        return {
+          solvePartOne: module?.day_one_part_one,
+          solvePartTwo: module?.day_one_part_two
+        }
+      case "Day Two":
+        return {
+          solvePartOne: module?.day_two_part_one,
+          solvePartTwo: module?.day_two_part_two
+        }
+      case "Day Three": {
+        return {
+          solvePartOne: module?.day_three_part_one,
+          solvePartTwo: module?.day_three_part_two
+        }
+      }
+      default:
+        return {
+          solvePartOne: module?.day_one_part_one,
+          solvePartTwo: module?.day_one_part_two
+        }
+    }
+  }
+
+  const dayProps = {
+    input,
+    setPartOne,
+    setPartTwo,
+    partOne,
+    partTwo,
+    ...getSolvers()
+  };
+
   return (
     <div className={styles.aoc}>
       <div className={styles.header}>
         <h1>Advent of Code 2016</h1>
         <h2>{currentDay}</h2>
-        <Nav items={["Day One", "Day Two"]} onClick={navClicked} />
+        <Nav items={["Day One", "Day Two", "Day Three"]} onClick={navClicked} />
       </div>
       <div className={styles.wrapper}>
         <div className={styles.blurb}>
@@ -84,29 +121,9 @@ const Home = () => {
             [ Select File ]
             <input ref={fileInput} className={styles.part} type="file" onChange={showFile} />
           </label>
-          {
-            currentDay === "Day One" ? (
-              <DayOne
-                part_one={module?.day_one_part_one}
-                part_two={module?.day_one_part_two}
-                input={input}
-                setPartOne={setPartOne}
-                setPartTwo={setPartTwo}
-                partOne={partOne}
-                partTwo={partTwo}
-              />
-            ) : (
-              <DayTwo
-                part_one={module?.day_two_part_one}
-                part_two={module?.day_two_part_two}
-                input={input}
-                setPartOne={setPartOne}
-                setPartTwo={setPartTwo}
-                partOne={partOne}
-                partTwo={partTwo}
-              />
-            )
-          }
+          <Day
+            {...dayProps}
+          />
           <button className={styles.button} onClick={clearClicked}>[ Clear ]</button>
         </div>
       </div>
