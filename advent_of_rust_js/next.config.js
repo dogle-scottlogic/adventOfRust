@@ -3,7 +3,7 @@ const nextConfig = {}
 
 module.exports = {
     reactStrictMode: true,
-    webpack: function (config, options) {
+    webpack: function (config) {
         config.experiments = { asyncWebAssembly: true, layers: true };
         return config;
     }
