@@ -1,4 +1,4 @@
-mod day_four;
+mod day_five;
 use std::fs::read_to_string;
 
 fn read_lines(filename: &str) -> Vec<String> {
@@ -12,6 +12,6 @@ fn read_lines(filename: &str) -> Vec<String> {
 }
 
 pub fn main() {
-    let result = day_four::solve_part_two(read_lines("src/input_files/day_four.txt"));
+    let result = day_five::solve_part_two(read_to_string("src/input_files/day_five.txt").unwrap());
     print!("{}", result)
 }

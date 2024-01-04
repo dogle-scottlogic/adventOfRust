@@ -1,3 +1,4 @@
+mod day_five;
 mod day_four;
 mod day_one;
 mod day_three;
@@ -47,6 +48,16 @@ pub fn day_four_part_one(input: String) -> String {
 #[wasm_bindgen]
 pub fn day_four_part_two(input: String) -> String {
     return day_four::solve_part_two(split_on_new_line(input)).to_string();
+}
+
+#[wasm_bindgen]
+pub fn day_five_part_one(input: String) -> String {
+    return day_five::solve_part_one(input);
+}
+
+#[wasm_bindgen]
+pub fn day_five_part_two(input: String) -> String {
+    return day_five::solve_part_two(input);
 }
 
 fn split_on_new_line(value: String) -> Vec<String> {
