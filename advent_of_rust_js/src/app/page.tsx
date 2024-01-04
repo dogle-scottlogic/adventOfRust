@@ -5,7 +5,8 @@ import Nav from './Nav';
 import React from 'react';
 import Day from './DaySolver';
 
-export type PuzzleDay = "Day One" | "Day Two" | "Day Three";
+const dayList = ["Day One", "Day Two", "Day Three", "Day Four"];
+export type PuzzleDay = typeof dayList[number];
 export type PuzzleSolverFunction = (input: string) => string;
 
 interface Module {
@@ -15,6 +16,8 @@ interface Module {
   day_two_part_two: PuzzleSolverFunction;
   day_three_part_one: PuzzleSolverFunction;
   day_three_part_two: PuzzleSolverFunction;
+  day_four_part_one: PuzzleSolverFunction;
+  day_four_part_two: PuzzleSolverFunction;
 };
 
 const Home = () => {
@@ -65,7 +68,7 @@ const Home = () => {
   }
 
   const getSolvers = (): { solvePartOne?: PuzzleSolverFunction, solvePartTwo?: PuzzleSolverFunction } => {
-    switch (currentDay) {
+    switch (currentDay as PuzzleDay) {
       case "Day One":
         return {
           solvePartOne: module?.day_one_part_one,
@@ -80,6 +83,12 @@ const Home = () => {
         return {
           solvePartOne: module?.day_three_part_one,
           solvePartTwo: module?.day_three_part_two
+        }
+      }
+      case "Day Four": {
+        return {
+          solvePartOne: module?.day_four_part_one,
+          solvePartTwo: module?.day_four_part_two
         }
       }
       default:
@@ -104,7 +113,7 @@ const Home = () => {
       <div className={styles.header}>
         <h1>Advent of Code 2016</h1>
         <h2>{currentDay}</h2>
-        <Nav items={["Day One", "Day Two", "Day Three"]} onClick={navClicked} />
+        <Nav items={dayList} onClick={navClicked} />
       </div>
       <div className={styles.wrapper}>
         <div className={styles.blurb}>
