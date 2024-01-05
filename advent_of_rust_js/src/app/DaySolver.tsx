@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from "./page.module.css";
 import { PuzzleSolverFunction } from './page';
+import Spinner from './Spinner';
 
 interface DayProps {
     solvePartOne?: PuzzleSolverFunction;
@@ -16,6 +17,7 @@ interface DayProps {
 const Day = (props: DayProps) => {
     const { solvePartOne, solvePartTwo, setPartOne, setPartTwo, partOne, partTwo, input } = props;
     const [error, setError] = useState<string>("");
+    const [loadingPartOne, setLoadingPartOne] = useState<boolean>(false);
 
     const solve = (part: PuzzleSolverFunction) => {
         try {
@@ -29,9 +31,11 @@ const Day = (props: DayProps) => {
     }
 
     const getPartOne = () => {
+        setLoadingPartOne(true);
         if (module != null && solvePartOne) {
             setPartOne(solve(solvePartOne));
         }
+        setLoadingPartOne(false);
     }
 
     const getPartTwo = () => {
@@ -39,14 +43,13 @@ const Day = (props: DayProps) => {
             setPartTwo(solve(solvePartTwo));
         }
     }
-
     return (
         <>
             {solvePartOne && solvePartTwo && input && (<>
                 <div className={styles.error}>{error}</div>
-                <div>
+                {loadingPartOne ? <Spinner /> : <div>
                     {partOne ? <label>{partOne}</label> : <button className={styles.button} onClick={getPartOne}>[ Solve Part One ]</button>}
-                </div>
+                </div>}
 
                 <div>
                     {partTwo ? <label>{partTwo}</label> : <button className={styles.button} onClick={getPartTwo}>[ Solve Part Two ]</button>}

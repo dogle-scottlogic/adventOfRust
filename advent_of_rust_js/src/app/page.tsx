@@ -4,21 +4,13 @@ import styles from "./page.module.css";
 import Nav from './Nav';
 import React from 'react';
 import Day from './DaySolver';
+import { convertModule } from './page.utils';
 
-const dayList = ["Day One", "Day Two", "Day Three", "Day Four"];
+const dayList = ["Day One", "Day Two", "Day Three", "Day Four", "Day Five"];
 export type PuzzleDay = typeof dayList[number];
 export type PuzzleSolverFunction = (input: string) => string;
 
-interface Module {
-  day_one_part_one: PuzzleSolverFunction;
-  day_one_part_two: PuzzleSolverFunction
-  day_two_part_one: PuzzleSolverFunction;
-  day_two_part_two: PuzzleSolverFunction;
-  day_three_part_one: PuzzleSolverFunction;
-  day_three_part_two: PuzzleSolverFunction;
-  day_four_part_one: PuzzleSolverFunction;
-  day_four_part_two: PuzzleSolverFunction;
-};
+interface Module { [key: PuzzleDay]: { solvePartOne: PuzzleSolverFunction, solvePartTwo: PuzzleSolverFunction } };
 
 const Home = () => {
   let fileInput: React.RefObject<HTMLInputElement> = React.createRef();;
@@ -29,11 +21,8 @@ const Home = () => {
   const [partTwo, setPartTwo] = useState<string | null>(null);
 
   useEffect(() => {
-    // Load and instantiate the Wasm module from the CDN
-    const wasmModule = import('advent_of_rust');
-
+    const wasmModule = convertModule();
     wasmModule.then((module) => {
-      // Use exported functions from the Wasm module
       setModule(module);
     });
   }, []);
@@ -68,35 +57,7 @@ const Home = () => {
   }
 
   const getSolvers = (): { solvePartOne?: PuzzleSolverFunction, solvePartTwo?: PuzzleSolverFunction } => {
-    switch (currentDay as PuzzleDay) {
-      case "Day One":
-        return {
-          solvePartOne: module?.day_one_part_one,
-          solvePartTwo: module?.day_one_part_two
-        }
-      case "Day Two":
-        return {
-          solvePartOne: module?.day_two_part_one,
-          solvePartTwo: module?.day_two_part_two
-        }
-      case "Day Three": {
-        return {
-          solvePartOne: module?.day_three_part_one,
-          solvePartTwo: module?.day_three_part_two
-        }
-      }
-      case "Day Four": {
-        return {
-          solvePartOne: module?.day_four_part_one,
-          solvePartTwo: module?.day_four_part_two
-        }
-      }
-      default:
-        return {
-          solvePartOne: module?.day_one_part_one,
-          solvePartTwo: module?.day_one_part_two
-        }
-    }
+    return module ? module[currentDay] : { solvePartOne: undefined, solvePartTwo: undefined };
   }
 
   const dayProps = {

@@ -12,7 +12,7 @@
     "react": "^18",
     "react-dom": "^18",
     "next": "14.0.4",
-    "advent_of_rust": "0.3.3"
+    "advent_of_rust": "0.3.4"
   },
   "devDependencies": {
     "typescript": "^5",
