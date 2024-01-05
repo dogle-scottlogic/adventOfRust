@@ -159,8 +159,6 @@ fn find_dest(instructions: Vec<&str>) -> (i32, i32) {
             1 => (coords.0 + steps.parse::<i32>().unwrap(), coords.1), // E
             _ => (coords.0 - steps.parse::<i32>().unwrap(), coords.1), // W
         };
-        // print!("Current direction: {:?}\n", compass.get(current_direction));
-        // print!("Current steps: {:?}\n", coords);
     }
     coords
 }

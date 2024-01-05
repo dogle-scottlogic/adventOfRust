@@ -6,7 +6,6 @@ pub fn solve_part_one(rooms: Vec<String>) -> u32 {
     for room in rooms {
         let room_parts = get_room_parts(&room);
         if is_real_room(room_parts.0, room_parts.2) {
-            // print!("{:?} is real room\n", room);
             sum = sum + room_parts.1;
         }
     }
