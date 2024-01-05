@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub fn solve_part_one(message: Vec<String>) -> String {
-    let mut result:String = "".to_string();
+    let mut result: String = "".to_string();
     for col in 0..message[0].len() {
         let mut highest_col_count = ('_', 0);
         let mut seen_chars_map: HashMap<char, u16> = HashMap::new();
@@ -29,7 +29,7 @@ pub fn solve_part_one(message: Vec<String>) -> String {
 }
 
 pub fn solve_part_two(message: Vec<String>) -> String {
-    let mut result:String = "".to_string();
+    let mut result: String = "".to_string();
     for col in 0..message[0].len() {
         // let mut highest_col_count = ('_', 0);
         let mut seen_chars_map: HashMap<char, u16> = HashMap::new();
@@ -45,7 +45,7 @@ pub fn solve_part_two(message: Vec<String>) -> String {
             }
         }
         let mut seen_chars = Vec::from_iter(seen_chars_map.clone());
-        seen_chars.sort_by_key(|k|k.1);
+        seen_chars.sort_by_key(|k| k.1);
         result.push(seen_chars[0].0);
     }
 
